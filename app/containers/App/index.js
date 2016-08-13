@@ -11,21 +11,69 @@
  * the linting exception.
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
+import Helmet from 'react-helmet';
+import { Box } from 'reflexbox';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import styles from './styles.css';
+import { closeSnackbar } from './actions';
 
-export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import {
+  selectIsSnackbarOpened,
+  selectSnackbarMessage,
+} from 'containers/App/selectors';
+
+// Import Components
+import Snackbar from 'material-ui/Snackbar';
+import Footer from './Footer';
+
+class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    children: React.PropTypes.node,
+    children: PropTypes.node,
+    isSnackbarOpened: PropTypes.bool.isRequired,
+    closeSnackbar: PropTypes.func.isRequired,
+    snackbarMessage: PropTypes.string.isRequired,
   };
 
   render() {
     return (
-      <div className={styles.container}>
+      <Box flex>
+        <Helmet
+          titleTemplate="%s - Rent People"
+          defaultTitle="Rent People"
+          meta={[
+            { name: 'description', content: 'Rent People application' },
+          ]}
+        />
         {this.props.children}
-      </div>
+        <Footer />
+        <Snackbar
+          open={this.props.isSnackbarOpened}
+          message={this.props.snackbarMessage}
+          autoHideDuration={5000}
+          onRequestClose={this.props.closeSnackbar}
+        />
+      </Box>
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  isSnackbarOpened: selectIsSnackbarOpened(),
+  snackbarMessage: selectSnackbarMessage(),
+});
+
+const mapDispatchToProps = (dispatch) => (
+  {
+    closeSnackbar: () => {
+      dispatch(closeSnackbar());
+    },
+  }
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

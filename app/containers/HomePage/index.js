@@ -3,19 +3,33 @@
  *
  * This is the first thing users see of our App, at the '/' route
  *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a neccessity for you then you can refactor it and remove
- * the linting exception.
  */
 
 import React from 'react';
+import Helmet from 'react-helmet';
 
-export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+// Import Components
+import HomeNavBar from './HomeNavBar';
+import IntroHeader from './IntroHeader';
+import HouseList from './HouseList';
+import FeatureDesc from './FeatureDesc';
+import CallToAction from './CallToAction';
 
-  render() {
-    return (
-      <h1>This is the Homepage!</h1>
-    );
-  }
-}
+
+const HomePage = () => (
+  <article>
+    <Helmet
+      title="Home"
+      meta={[
+        { name: 'description', content: 'RentPeople homepage' },
+      ]}
+    />
+    <HomeNavBar />
+    <IntroHeader />
+    <HouseList />
+    <FeatureDesc />
+    <CallToAction />
+  </article>
+);
+
+export default HomePage;

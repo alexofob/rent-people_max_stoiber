@@ -1,0 +1,9 @@
+import '../components/Account/Login/spec';
+import '../components/Account/Signup/spec';
+import '../components/Account/ResetPwd/spec';
+import '../components/Account/ResetPwdFinal/spec';
+import '../components/HomeNavBar/AuthMenu/spec';
+import '../components/HomeNavBar/AuthNav/spec';
+import '../components/HomeNavBar/MobileAuthNav/spec';
+import '../components/HomeNavBar/MobilePublicNav/spec';
+import '../components/HomeNavBar/PublicNav/spec';

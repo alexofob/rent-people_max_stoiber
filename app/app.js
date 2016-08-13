@@ -17,11 +17,33 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import FontFaceObserver from 'fontfaceobserver';
 import useScroll from 'react-router-scroll';
 import configureStore from './store';
 
-// Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
-import 'sanitize.css/sanitize.css';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
+
+// Observe loading of Roboto (to remove roboto, remove the <link> tag in
+// the index.html file and this observer)
+import styles from 'containers/App/styles.css';
+const robotoObserver = new FontFaceObserver('Roboto', {});
+
+// When Roboto is loaded, add a font-family using Roboto to the body
+robotoObserver.load().then(() => {
+  document.body.classList.add(styles.fontLoaded);
+}, () => {
+  document.body.classList.remove(styles.fontLoaded);
+});
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
@@ -47,17 +69,19 @@ const rootRoute = {
 };
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router
-      history={history}
-      routes={rootRoute}
-      render={
-        // Scroll to top when going to a new page, imitating default browser
-        // behaviour
-        applyRouterMiddleware(useScroll())
-      }
-    />
-  </Provider>,
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <Provider store={store}>
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
+          // Scroll to top when going to a new page, imitating default browser
+          // behaviour
+          applyRouterMiddleware(useScroll())
+        }
+      />
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('app')
 );
 

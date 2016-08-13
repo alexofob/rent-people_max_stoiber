@@ -1,24 +1,4 @@
-/* Global styles */
-
-html,
-body {
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-body.fontLoaded {
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-:global(#app) {
-  background-color: #FAFAFA;
-  min-height: 100%;
-  min-width: 100%;
-}
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -85,4 +65,12 @@ a:hover {
 
 a:active {
   text-decoration: underline;
+}
+
+.brand {
+  text-decoration: none;
+  color: black !important;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px
 }

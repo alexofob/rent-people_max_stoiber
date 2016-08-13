@@ -15,6 +15,25 @@ const selectLocationState = () => {
   };
 };
 
+/**
+ * App selectors
+ */
+import { createSelector } from 'reselect';
+
+const selectGlobal = () => (state) => state.get('global');
+
+const selectIsSnackbarOpened = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('isSnackbarOpened')
+);
+
+const selectSnackbarMessage = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('snackbarMessage')
+);
+
 export {
+  selectIsSnackbarOpened,
+  selectSnackbarMessage,
   selectLocationState,
 };
